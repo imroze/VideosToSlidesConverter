@@ -1,0 +1,144 @@
+Welcome to the course Control of Mobile
+Robots. My name is Magnus Egerstedt, and I'm a
+professor at Georgia Tech in the school of Electrical
+and Computer Engineering. And I am delighted to be able to to
+deliver this, this course to you. The focus of the course is, how do you
+make mobile robots move in effective and safe
+and predictable ways? Meaning that they don't slam into
+obstacles, they move smoothly and nicely without having weird oscillations
+in their motions. And the trick to achieving this is
+something called control theory. An this first module of the course is going to focus on controls and control
+theory, and what it is, and what the pieces are that you need to be able to actually control
+robots. Before I dive in, though, I wanted to say
+a few words about myself. My research hammer is control theory, so that, as I've
+already said, deals with how do you make things move or behave
+well. This could be stock markets. This could be cruise controllers. This could be limiting the spread of epidemics, for instance, using
+vaccination strategies. So control theory doesn't really have a
+tight, necessary coupling to robotics. It's a general language for describing how
+things behave. Now, if that's my hammer, my nail is
+robotics. And I'm very, very interested in how do you make robots do elegant and useful
+things. And, in my lab, we do really three
+different types of robotics. One is swarm robotics. So how do you get lots and lots of robots
+to do exciting things together. The other is something called behavior
+based control, or behavior based robotics. And we will see quite a bit of this in
+this course. Behavior is basically a controller that's in charge of something, like, going
+towards a landmark, or not slamming into
+obsticles, or following cooridors, or things like
+that. And the question is: how do you design these behaviors and how do you patch them
+together. The third thing that I'm interested in is
+field robotics. Meaning how do you take robots and put
+them out in the unstructured, strange world outside of
+the lab, meaning, if you have a robot driving through the forest,
+all of a sudden there are no corridors or hallways or doors and
+life becomes much more complicated. So, before we start, I wanted to show a
+little video that came out of my lab a few years
+ago. So, here, this is is an example of swarm
+robotics. We have 15 robots that have been asked to
+spell grits. And grits stands for Georgia Robotics and
+Intelligence Systems. That's the robotics lab that I'm
+directing. And, these robots have to figure out where
+they should go in the letter. They need to figure out how they should go
+there and they need to figure out how to go there without
+slamming into each other. So, what's going on there is control
+design at multiple levels of abstraction. One each, one is the high level, where
+should you go? Then you have the lower level which deals
+with, okay, I know where I want to be. How do I actually get there without
+driving into other robots, for instance. And as you can see, these robots, with very limited information, meaning
+they don't really know where every other robot is, they
+figure out where they should go in this
+formation. And this video I like for multiple
+reasons. One is, because there's a lot of control
+theory going on underneath the hood. And the second is, you will be able to do
+this at the end of this course. So, let's talk a little about the course. Control theory will play a key role, meaning, how do you actually control
+systems? And this will be done decoupled from
+robotics. But then, we're going to couple in the
+robotic applications by looking at robot models, because not all
+robots are the same. Some are hopping. Some are slithering.
+Some are rolling. Some are flying. And different type of robots require
+different type of controllers. We're going to look in general at
+mobility, meaning, how do you make the robots move? That's the main question we're interested
+in, in this course. And then we'll end with applications. So, what can you actually use these robot
+for, robots for and where do we need the kinds of solutions that we
+will be going through in the course. I do want to say though, that the course
+is not about artificial intelligence, which
+is the high level planning, meaning what should the robots actually be
+doing. We're going to be dealing with the
+question of, when they've already figured out what they should be doing, how should
+they be doing it. We're not going to deal much with
+perception, meaning how do we take computer motion, data and actually
+turn it into something actable? Or how do we actually design perception
+algorithms? We're going to assume that someone else
+has done this. And we're going to act on the perceptual
+data that we already have. And it's not a mechanical engineering
+course. Meaning, we're not going to be building
+robots or dealing with different kinds of robotic
+designs. However, there is a slight little caveat
+to that. Because we will indeed be looking at some
+hardware aspects of robotics. Here is a video from a course I taught on
+campus at Georgia Tech. And, this is a robot that's running a lot of the things that we're learning in this course, meaning
+it's figuring out how to get to a landmark, in this case, a
+purple little tape mark on the floor. But it has to do it while avoiding
+obstacles. So, it has to design different controllers
+for different situations. For instance, the left robot is not doing
+so well. The right robot here is doing even worse. It's slamming into things. But the point is that, at the end of this
+course you will be able to do this. Hopefully better than what we are seeing
+right now, because the robots are all over the
+place. Here we're seeing some other
+instantiations of this. See how the robot is oscillating a little bit
+too much, but it is able to navigate the, the cardboard box and, well, the right robot is driving into
+chairs. The other robot seems to be a little
+confused. So, these are examples of robotic
+controllers that aren't perfectly tuned and perfectly
+designed. Let's look at a final race. We're going to see what the outcome would be if you'd done the control design
+properly. See, they're going straight.
+There's very little oscilation. Well, one robot is oscilating but the
+purple robot there seems to be doing really well, going
+quite straight. And this, in my mind, is a successful
+robotic control design. So, what is actually in the course, or how
+is this structured. Well, we're going to have lectures. There're going to be eight mini lectures
+each week. And, there are going to be seven weeks in
+total. Each week will be capped by a quiz. And, there will also be glue lectures. So, lectures that are designed to glue
+what I do, my slides, to the actual quizzes. And then, as a bonus, there will be
+additional material. This is not mandatory. But if you do it, your experience will no
+doubt be more enjoyable. First of all, we have a robotic simulator that we use in the lab called Sim.I.am. It runs on MATLAB and this will be part of the course, meaning you can do it if you
+want to. Few words, MATLAB, is the program
+environment we are using because this is one of the standards in
+the engineering world. Now, you will be able to get MATLAB for free as a student license through this
+course. So this will come at no extra cost to you. But then, we'll also map this onto a real
+hardware platform, where, if you're interested you
+build your own robot. Because, I truly believe that there' s
+nothing more exciting than doing the theory right, and then seeing things
+move in the real world. So, if you follow along the course, do the
+simulatin and also build the robot. At the end, you will have an awesome platform that can actually run around in
+the world without slamming into things. Before we do this though, I want to make
+one minor or maybe even major disclaimer. To do robotics right and to do control
+theory right there is no way around the fact that you
+need math. So mathematics will play a key role. And this may be a little uncomfortable to
+some of you at first but we're doing it for a
+reason. And I will try my best to make sure that I
+explain why we're actually going through all the stuff
+that we're going through. But things like linear algebra, matrices,
+and eigen values will show up. Differential equations will play a key
+role. Calculus, derivatives and integrals will
+be everywhere. And this is just something you have to do
+in able, in a, in order to be able to do robotics
+right. And I hope you will be following me along this ride for
+this seven week adventure. As a final note, before the actual course
+begins, let me that this opportunity to introduce the team
+behind the course, they are all graduate students in robotics and control theory,
+here at Georgia Tech, and here is Smriti Chopra, Smriti is going to be
+running the, the glue lectures. So these are lectures that are going to
+map the general stuff that I do in class onto the particulars of
+the weekly quizzes. And, Smriti is also going to be highly involved
+on the discussion forums. And here we have J.P. de LaQua. J.P. is going to be the, the master of
+ceremony when it comes to running the, the robotic experiments that we're
+sprinkling in throughout the course to highlight and stress
+particular key points. And JP is also the key force behind the
+optional simulation part of the course, and he will
+be running the weekly programming assignments.
+And here lastly is Roland O'Flaherty and Roland is the hardware guy.
+He's going to show us how to build robots. And this will also be an optional weekly feature where we will be building
+platforms that, at the end of the day, we can implement
+and run our controllers and code on. And Roland tells me that he's actually
+going to produce a cooking show, but instead of
+baking bread, we will be baking robots.
