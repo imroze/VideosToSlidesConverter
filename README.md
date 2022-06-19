@@ -1,7 +1,7 @@
 # SlideThruLectures
 A Python and OpenCV based tool that uses Computer Vision algorithms and Text Parsing to convert Online Lecture/MOOC Videos and Transcripts into auto-generated Slides with images and caption text, to facilitate easy and effective note-taking, learning, revision, compilation, referencing, skimming, comparsion and analysis of online course content.
 
-##Requirements:
+## Requirements:
 - Python 3
 - OpenCV 3
 - NumPy
